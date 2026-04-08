@@ -5,7 +5,7 @@ navbar_name: "Yerim"
 positions:
 - name: Masters Student
 - name: Ewha Womans University
-# logo: /assets/images/badges/MIT_Social_circle.png  # Logo is optional
+  logo: /assets/images/badges/symbol-mark.png  # Logo is optional
 
 
 email: "yrso@ewha.ac.kr"
@@ -32,12 +32,12 @@ portrait_url: /assets/images/photos/portrait.jpg
 
 education:
 - name: Ewha Womans University
-  logo: /assets/images/badges/MIT_Social_circle.png
+  logo: /assets/images/badges/symbol-mark.png
   position: >- 
     M.S. in Computer Science and Engineering
   date: Mar. 2025 - present
 - name: Ewha Womans University
-  logo: /assets/images/badges/PKU_red.png
+  logo: /assets/images/badges/symbol-mark.png
   position: B.S. in Computer Science and Engineering
   date: Mar. 2020 - Feb. 2025
 
