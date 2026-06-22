@@ -4,9 +4,7 @@
 # cv_pdf: /assets/pdf/example_pdf.pdf # path to your CV PDF file
 email: yerimlenaso@gmail.com # your email address
 # inspirehep_id: yerimso # Inspire HEP author ID
-rss_icon: true # comment this line to hide the RSS icon
+rss_icon: false # comment this line to hide the RSS icon
 scholar_userid: 5P_3aUgAAAAJ # your Google Scholar ID
-custom_social: # can be any name here other than the ones already defined in the jekyll-socials plugin
-  logo: https://www.alberteinstein.com/wp-content/uploads/2024/03/cropped-favicon-192x192.png # can be png, svg, jpg
-  title: linkedin
-  url: www.linkedin.com/in/yerimso
+linkedin_username: yerimso
+github_username: yrlso
