@@ -4,7 +4,6 @@
 # cv_pdf: /assets/pdf/example_pdf.pdf # path to your CV PDF file
 email: yerimlenaso@gmail.com # your email address
 # inspirehep_id: yerimso # Inspire HEP author ID
-rss_icon: false # comment this line to hide the RSS icon
 scholar_userid: 5P_3aUgAAAAJ # your Google Scholar ID
 linkedin_username: yerimso
 github_username: yrlso
