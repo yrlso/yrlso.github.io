@@ -2,7 +2,10 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: >
+  M.S. Student,
+  <a href="https://cvl.ewha.ac.kr/" target="_blank">Computer Vision Lab</a>,
+  Ewha Womans University
 
 profile:
   align: right
