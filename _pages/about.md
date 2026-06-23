@@ -32,4 +32,4 @@ Put your address / P.O. box / other info right below your picture. You can also 
 
 Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
 
-If you're interested, feel free to check out my <a href="https://drive.google.com/file/d/18ay1-p7JFVXfuJN71fIwXKJnHYAkKDbS/view?usp=drive_link" target="_blank">[CV]</a>
+If you're interested, feel free to check out my <a href="https://drive.google.com/file/d/16Coed3G7w3bmO651jWo6pE2L2ke_DgXw/view?usp=drive_link" target="_blank">[CV]</a>
