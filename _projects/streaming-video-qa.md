@@ -5,7 +5,7 @@ description: "Choosing what a video system should remember before it knows which
 importance: 5
 category: "research"
 status: "Ongoing research · Evaluation in progress"
-period: "July 2026–present"
+period: "September 2026–present"
 role_short: "Problem formulation · Selection policy design · Memory-based evaluation"
 stack: "Python · PyTorch · Qwen-VL · Reinforcement learning"
 summary: "Question-agnostic frame and token selection for answering future questions from a limited visual memory."
