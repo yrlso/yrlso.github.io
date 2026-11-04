@@ -2,64 +2,43 @@
 layout: page
 title: projects
 permalink: /projects/
-description: Research and engineering projects in multimodal AI, video understanding, and medical imaging.
+description: Selected research and engineering projects — my contributions, results, and supporting materials.
 nav: true
 nav_order: 3
 display_categories: [research, engineering, internship]
-horizontal: false
 ---
 
-<!-- pages/projects.md -->
-<div class="projects">
-{% if site.enable_project_categories and page.display_categories %}
-  <!-- Display categorized projects -->
-  {% for category in page.display_categories %}
-  <a id="{{ category }}" href=".#{{ category }}">
-    <h2 class="category">{{ category }}</h2>
-  </a>
-  {% assign categorized_projects = site.projects | where: "category", category %}
-  {% assign sorted_projects = categorized_projects | sort: "importance" %}
-  <!-- Generate cards for each project -->
-  {% if page.horizontal %}
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
+<div class="publications">
+  <ol class="bibliography">
+    {% for category in page.display_categories %}
+      {% assign entries = site.projects | where: "category", category | sort: "importance" %}
+      {% for project in entries %}
+        <li>
+          <div class="row">
+            <div class="col col-sm-2 abbr">
+              <abbr class="badge rounded w-100">{{ project.category | capitalize }}</abbr>
+              {% if project.img %}
+                <a href="{{ project.url | relative_url }}" aria-label="{{ project.title | escape }} — project details">
+                  <img src="{{ project.img | relative_url }}" alt="{{ project.image_alt | default: project.title | escape }}" class="preview img-fluid z-depth-1 rounded" loading="lazy">
+                </a>
+              {% endif %}
+            </div>
+            <div class="col-sm-10">
+              <div class="title"><a href="{{ project.url | relative_url }}" style="color: inherit">{{ project.title }}</a></div>
+              <div class="author">{{ project.role_short }}</div>
+              <div class="periodical"><em>{{ project.period | default: project.status }}</em></div>
+              <div class="mt-1">{{ project.summary }}</div>
+              <div class="mt-1"><strong>{{ project.card_result }}</strong></div>
+              <div class="links">
+                <a href="{{ project.url | relative_url }}" class="btn btn-sm z-depth-0" role="button">Details</a>
+                {% for link in project.links %}
+                  <a href="{{ link.url }}" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
     {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
-  {% endfor %}
-
-{% else %}
-
-<!-- Display projects without categories -->
-
-{% assign sorted_projects = site.projects | sort: "importance" %}
-
-  <!-- Generate cards for each project -->
-
-{% if page.horizontal %}
-
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
-{% endif %}
+  </ol>
 </div>
