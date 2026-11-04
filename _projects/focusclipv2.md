@@ -2,6 +2,8 @@
 layout: "page"
 title: "FocusCLIPv2"
 description: "Making fluorescence image focus assessment accessible through a browser-based research tool."
+img: "assets/img/focusclipv2-preview.png"
+image_alt: "FocusCLIPv2 fluorescence image focus assessment interface on Hugging Face Spaces"
 importance: 1
 category: "engineering"
 status: "Public research demo"
