@@ -1,78 +1,66 @@
 ---
-layout: page
-title: MRI motion artifact correction
-description: Applying generative models to motion-corrupted MRI during a research internship at KIST.
-permalink: /projects/kist-mri/
+layout: "page"
+title: "MRI motion artifact correction"
+description: "Adapting generative image translation to improve motion-degraded MRI images."
 importance: 7
-category: internship
-status: Research internship
-period: September–December 2023
-role: Model implementation and adaptation, experiment execution, and analysis
-role_short: KIST research intern · Implementation & experimental analysis
-stack: Python · Generative modeling · CycleGAN · Diffusion models
-summary: Adapting a generative image-translation pipeline to study correction of motion artifacts in MRI images.
-card_result: Research experience adapting CycleGAN–diffusion modeling to medical images
-tags: [KIST, MRI, Generative models]
+category: "internship"
+status: "KIST research internship"
+period: "September–December 2023"
+role_short: "KIST research intern · Model adaptation & experimental analysis"
+stack: "Python · SynDiff · CycleGAN · Diffusion models"
+summary: "Implementation and evaluation of a CycleGAN–diffusion pipeline for MRI motion artifact correction at KIST."
+card_result: "Qualitative correction results from four motion-degraded MRI examples."
+img: "assets/img/kist-mri-results.png"
+image_alt: "Four MRI examples, each showing a motion-corrupted image followed by its corrected output"
+permalink: "/projects/kist-mri/"
 ---
 
 [← All projects]({{ '/projects/' | relative_url }})
 
-- **My role:** {{ page.role }}
-  {% if page.period %}- **Period:** {{ page.period }}
-  {% endif %}- **Status:** {{ page.status }}
-- **Tools:** {{ page.stack }}
-
-{{ page.summary }}
-
-{% if page.highlights %}{% for metric in page.highlights %}- **{{ metric.value }}** — {{ metric.label }}
-{% endfor %}{% endif %}
-
-{% if page.links %}{% for link in page.links %}[{{ link.label }}]({{ link.url }}){% unless forloop.last %} · {% endunless %}{% endfor %}{% endif %}
+**At a glance:** {{ page.card_result }}
 
 ---
 
-[Problem](#problem-and-constraints) · [My contribution](#my-contribution) · [Approach](#approach) · [Results](#experiments-and-results) · [Resources](#resources)
+## Goal & significance
 
-## Problem and constraints
+Motion during an MRI scan can blur anatomy and introduce image artifacts. This project investigated whether generative image translation could improve the quality of motion-corrupted MRI images.
 
-Motion during an MRI scan can introduce artifacts that degrade image quality. The research task was to investigate whether generative modeling could improve motion-corrupted MRI images.
+It was my first experience adapting an existing generative method to a medical imaging problem and inspecting the outputs in relation to the task's needs.
 
-I worked on this problem as a research intern in the **Medical AI Lab, Bionics Research Center, Korea Institute of Science and Technology (KIST)**, from September to December 2023.
+---
 
-## My contribution
+## My role & timeline
 
-I participated in model implementation and adaptation, experiment execution, and analysis. The work involved applying **SynDiff**, which combines CycleGAN-style image translation with diffusion modeling, to MRI motion artifact correction.
+- **Period:** {{ page.period }}.
+- **Organization:** Medical AI Lab, Bionics Research Center, Korea Institute of Science and Technology (KIST).
+- **My work:** Model implementation and adaptation, experiment execution, and result analysis.
 
-This internship was an early opportunity to move from an existing generative method to the practical details of a new medical imaging task.
+---
 
 ## Approach
 
-### Understand the adaptation target
+- **Adapt an existing method:** Apply SynDiff, combining CycleGAN-style image translation with diffusion modeling, to the MRI correction task.
+- **Run the complete experiment pipeline:** Prepare the method for the project setting, execute experiments, and compare the corrected images with their inputs.
+- **Inspect task-specific changes:** Examine whether motion-related degradation is reduced and anatomical structures become easier to distinguish.
 
-The input contains motion-related degradation, while the desired output should have improved image quality. Applying a general generative image-translation framework required considering the characteristics of MRI data and the intended correction task.
+---
 
-### Implement and apply a combined generative pipeline
+## Experiments & results
 
-I worked with the SynDiff framework, combining adversarial image translation and a diffusion-based component. My responsibilities centered on making the method applicable to the project setting and running the corresponding experiments.
+The figure shows **four examples**, separated by vertical lines. **Within each pair, the left image is before correction and the right image is after correction.**
 
-The value of this experience was in the complete implementation-and-analysis loop: understanding an existing method, adapting its use, executing experiments, and inspecting the resulting images.
+<figure class="figure">
+  <img src="{{ '/assets/img/kist-mri-results.png' | relative_url }}" alt="Four pairs of MRI images. In each pair, the left image has motion artifacts and the right image is the corrected output." class="img-fluid rounded" loading="lazy">
+  <figcaption class="caption">Four qualitative results. Left within each pair: motion-corrupted input. Right: corrected output.</figcaption>
+</figure>
 
-## Experiments and results
+The examples illustrate reduced visible motion artifacts and clearer structures after correction. They are **qualitative results**, rather than a numerical image-quality benchmark or evidence of clinical validation.
 
-The project provided hands-on research experience with a **CycleGAN–diffusion pipeline for medical imaging**. My documented contribution includes model implementation, task adaptation, and experiment analysis.
+The internship gave me hands-on experience moving from an existing model to task adaptation, execution, and analysis—a workflow I later applied to pathology and multimodal research.
 
-The outcome described here is my implementation and experimental analysis work during the internship.
-
-## What I learned
-
-Working on medical images made task-specific interpretation essential. An image-generation method needs to be considered in the context of the information the target domain requires, and experiments need to be inspected with that purpose in mind.
-
-This experience helped establish the implementation and analysis skills I later used in pathology segmentation and multimodal model research.
+---
 
 ## Resources
 
-- **Organization:** Korea Institute of Science and Technology (KIST), Medical AI Lab, Bionics Research Center.
-- **Period:** September–December 2023.
-- **Research direction:** MRI motion artifact correction using a CycleGAN–diffusion framework.
-
-[← Explore all projects]({{ '/projects/' | relative_url }})
+- **Research setting:** KIST Medical AI Lab, Bionics Research Center.
+- **Tools:** {{ page.stack }}.
