@@ -1,30 +1,5 @@
-/* Site typography; the theme's grid, colors, and component layout are retained. */
-:root {
-  --site-text-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
-}
-
-body,
-button,
-input,
-select,
-textarea,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.navbar-brand,
-.post-title,
-.publications .title,
-.publications .author,
-.publications .periodical,
-.btn {
-  font-family: var(--site-text-font);
-}
-
+/* Reading spacing only; font families and weights come from the original theme. */
 body {
-  font-weight: 400;
   line-height: 1.75;
 }
 
@@ -81,11 +56,4 @@ body {
 .publications .author,
 .publications .periodical {
   line-height: 1.7;
-}
-
-code,
-kbd,
-pre,
-samp {
-  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
