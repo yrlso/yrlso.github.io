@@ -1,0 +1,91 @@
+/* Site typography; the theme's grid, colors, and component layout are retained. */
+:root {
+  --site-text-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+}
+
+body,
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand,
+.post-title,
+.publications .title,
+.publications .author,
+.publications .periodical,
+.btn {
+  font-family: var(--site-text-font);
+}
+
+body {
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.post article {
+  line-height: 1.8;
+}
+
+.post article p {
+  margin-bottom: 1.2rem;
+}
+
+.post article li {
+  line-height: 1.8;
+}
+
+.post article li + li {
+  margin-top: 0.55rem;
+}
+
+.post article h2 {
+  line-height: 1.35;
+  margin-bottom: 0.9rem;
+}
+
+.post article hr {
+  margin: 2rem 0;
+}
+
+.post article th,
+.post article td {
+  padding: 0.7rem 0.85rem;
+  line-height: 1.65;
+  vertical-align: top;
+}
+
+@media (max-width: 575.98px) {
+  .post article table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+.post article figcaption {
+  line-height: 1.6;
+  margin-top: 0.65rem;
+}
+
+.publications ol.bibliography > li {
+  margin-bottom: 2rem;
+  line-height: 1.75;
+}
+
+.publications .author,
+.publications .periodical {
+  line-height: 1.7;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
