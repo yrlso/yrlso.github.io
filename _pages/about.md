@@ -38,10 +38,8 @@ latest_posts:
   }
 </style>
 
-I build **multimodal AI systems**, with a focus on video understanding and medical imaging. I am a master's student in the [Computer Vision Lab](https://cvl.ewha.ac.kr/) at Ewha Womans University, advised by Professor Dongbo Min, and expect to graduate in February 2027.
+I am a master's student in the [Computer Vision Lab](https://cvl.ewha.ac.kr/) at Ewha Womans University, advised by Professor Dongbo Min. My research interests are **multimodal learning, video understanding, and medical image analysis**, and I expect to graduate in February 2027.
 
-My strength is taking a problem from **data construction and model design to hands-on implementation, evaluation, and failure analysis**. I led **SimVA** as first author, contributed to **SeGroS** (ECCV 2026, second author), and work with biomedical researchers on pancreatic tissue segmentation, improving three-class mean IoU from **54.91% to 73.41%**.
+I am interested in how AI connects visual information with language, uses spatial and temporal context, and preserves useful evidence under resource constraints. I enjoy research that turns these questions into tools and methods that support real research workflows.
 
-I also connect research with usable tools: I deployed **FocusCLIPv2** on Hugging Face Spaces so researchers can assess microscope images and export results through a browser. Across these projects, I turn domain requirements and observed model failures into concrete, testable engineering decisions.
-
-[Projects]({{ '/projects/' | relative_url }}) · [CV](https://drive.google.com/file/d/16Coed3G7w3bmO651jWo6pE2L2ke_DgXw/view?usp=drive_link)
+I like working through open-ended problems with people from different backgrounds. In collaborations with biomedical researchers, I discuss annotation rules and model failures to understand their needs and translate domain knowledge into technical decisions. I value **clear communication, constructive feedback, and end-to-end ownership**—making assumptions explicit, revisiting them when evidence changes, and following ideas through implementation and evaluation.
