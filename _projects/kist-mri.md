@@ -23,9 +23,9 @@ permalink: "/projects/kist-mri/"
 
 ## Goal & significance
 
-Motion during an MRI scan can blur anatomy and introduce image artifacts. This project investigated whether generative image translation could improve the quality of motion-corrupted MRI images.
+Motion during an MRI scan can blur anatomical structures and create artifacts. The project investigated whether a generative image-translation method could improve images affected by that degradation.
 
-It was my first experience adapting an existing generative method to a medical imaging problem and inspecting the outputs in relation to the task's needs.
+The task differs from generating a visually plausible image from scratch: the output needs to remain connected to the input anatomy while reducing motion-related degradation. Evaluating the corrected images in the context of the task is therefore part of adapting the method.
 
 ---
 
@@ -33,30 +33,34 @@ It was my first experience adapting an existing generative method to a medical i
 
 - **Period:** {{ page.period }}.
 - **Organization:** Medical AI Lab, Bionics Research Center, Korea Institute of Science and Technology (KIST).
-- **My work:** Model implementation and adaptation, experiment execution, and result analysis.
+- **Ownership:** Model implementation and adaptation, experiment execution, and result analysis.
+
+I worked with **SynDiff**, a framework combining CycleGAN-style image translation and diffusion modeling, and applied it to the MRI motion-artifact correction setting. This gave me early experience moving from an existing research method to a new medical-imaging task.
 
 ---
 
 ## Approach
 
-- **Adapt an existing method:** Apply SynDiff, combining CycleGAN-style image translation with diffusion modeling, to the MRI correction task.
-- **Run the complete experiment pipeline:** Prepare the method for the project setting, execute experiments, and compare the corrected images with their inputs.
-- **Inspect task-specific changes:** Examine whether motion-related degradation is reduced and anatomical structures become easier to distinguish.
+- **Understand the adaptation target.** The input contains motion-related degradation; the intended output should make the underlying structures clearer. This task framing guided how the generated outputs were inspected.
+- **Apply an existing generative framework.** My implementation work centered on adapting the SynDiff pipeline to the project setting and executing the corresponding experiments.
+- **Compare input and output directly.** Reviewing paired views of the same example makes changes in visible artifacts and anatomical structure easier to assess than inspecting corrected outputs alone.
+
+The project developed my implementation-and-analysis workflow: understand the method, adapt it to the task, run experiments, and inspect whether the outputs address the original problem.
 
 ---
 
 ## Experiments & results
 
-The figure shows **four examples**, separated by vertical lines. **Within each pair, the left image is before correction and the right image is after correction.**
+The figure contains **four examples**, separated by vertical lines. **Within every pair, the left image is the motion-corrupted input and the right image is the corrected output.**
 
 <figure class="figure">
-  <img src="{{ '/assets/img/kist-mri-results.png' | relative_url }}" alt="Four pairs of MRI images. In each pair, the left image has motion artifacts and the right image is the corrected output." class="img-fluid rounded" loading="lazy">
-  <figcaption class="caption">Four qualitative results. Left within each pair: motion-corrupted input. Right: corrected output.</figcaption>
+  <img src="{{ '/assets/img/kist-mri-results.png' | relative_url }}" alt="Four MRI comparison pairs, each ordered as motion-corrupted input on the left and corrected output on the right." class="img-fluid rounded" loading="lazy">
+  <figcaption class="caption">Four qualitative correction examples. Each pair: before correction (left) → after correction (right).</figcaption>
 </figure>
 
-The examples illustrate reduced visible motion artifacts and clearer structures after correction. They are **qualitative results**, rather than a numerical image-quality benchmark or evidence of clinical validation.
+The examples show reduced visible motion artifacts and clearer structures after correction. They document **qualitative results**; this page does not report a numerical image-quality benchmark.
 
-The internship gave me hands-on experience moving from an existing model to task adaptation, execution, and analysis—a workflow I later applied to pathology and multimodal research.
+My contribution was implementation, task adaptation, and experimental analysis of the existing method. The experience later informed how I work with medical data and inspect failure cases in pathology segmentation.
 
 ---
 

@@ -25,43 +25,48 @@ permalink: "/projects/focusclipv2/"
 
 ## Goal & significance
 
-A microscope image quality model is easier to use when researchers can submit their own images and inspect results without installing a Python environment. FocusCLIPv2 turns model inference into a browser-based workflow.
+Microscope image quality affects which images researchers can use for later analysis. A model is easier to incorporate into that workflow when researchers can assess their own images without installing a Python environment or interpreting raw prediction indices.
 
-The tool assesses fluorescence image focus using **both the image and stain information**, returning one of three quality categories: Good, Moderate, or Bad.
+FocusCLIPv2 exposes a fluorescence image focus-assessment model through a browser. It uses **both the image and stain information**, returning one of three quality categories: **Good, Moderate, or Bad**. The stain identifies the fluorescence channel and is part of the model input, rather than optional metadata.
+
+The engineering goal is a complete path from a researcher's image to an understandable, reusable result.
 
 ---
 
 ## My role & timeline
 
-- **My work:** Deployed the model on Hugging Face Spaces and built the Gradio upload, inference, and CSV export workflow.
+- **Ownership:** Deployed the model on Hugging Face Spaces and built the Gradio image-upload, inference, and CSV-export workflow.
 - **Status:** Public research demo.
-- **Contribution scope:** Model deployment and the user-facing inference workflow.
+- **Contribution scope:** Deployment and the user-facing inference workflow.
 
-I connected model inputs and outputs with the steps a researcher needs to run an assessment, understand the labels, and keep the results.
+I connected image handling and model execution with the decisions users need to make: which stain to choose, what images to submit, how to interpret a label, and how to keep the result for later use.
 
 ---
 
 ## Approach
 
-- **Make inputs clear:** Let users select the stain and upload multiple images, with guidance on supported channels and single-stain inputs.
-- **Make outputs interpretable:** Present named quality categories with stain-specific reference examples.
-- **Make results reusable:** Export the original filename, selected stain, and prediction together in a CSV.
+- **Make the input assumptions visible.** Users select a supported stain and upload images from that channel. The guidance explains the model's 10× image setting and recommends single-stain inputs rather than overlays.
+- **Make predictions interpretable.** The interface displays named focus categories with reference examples, helping users connect a prediction to the type of visual quality it describes.
+- **Keep outputs traceable.** Each CSV row retains the original image filename, selected stain, and predicted label. Researchers can associate outputs with their source images after leaving the browser.
+- **Support the complete interaction.** English and Korean instructions cover upload, prediction, and download. Image-use consent is presented before upload, and hosting constraints are explained alongside the workflow.
 
-The application provides English and Korean guidance and communicates image-use consent before upload. Its documented model setting uses 10× images and four predefined stain groups.
+The supported channel groups are DAPI / Hoechst (405 nm), Alexa 488 / FITC (488 nm), Alexa 546 / Cy3 (546 nm), and Alexa 647 / Cy5 (647 nm).
 
 ---
 
 ## Experiments & results
 
-The engineering outcome is a **publicly deployed, complete inference workflow**:
+The engineering outcome is a **publicly deployed inference application**, with a complete researcher-facing workflow:
 
-| Researcher action                | Application output                              |
-| -------------------------------- | ----------------------------------------------- |
-| Select a stain and upload images | Inputs prepared for the model                   |
-| Run assessment                   | Good / Moderate / Bad for each image            |
-| Download results                 | CSV retaining filenames, stain, and predictions |
+| Step               | Researcher action                | Result                                                  |
+| ------------------ | -------------------------------- | ------------------------------------------------------- |
+| 1. Prepare input   | Choose a stain and upload images | Images and channel information are passed to the model  |
+| 2. Assess quality  | Run inference                    | A Good / Moderate / Bad label for each image            |
+| 3. Keep the output | Download the results             | A CSV linking each prediction to its filename and stain |
 
-This page presents the deployment outcome rather than a new model-accuracy benchmark. Live inference availability depends on the hosting platform's shared GPU allocation.
+This demonstrates deployment of the inference workflow. Model accuracy and user-adoption metrics are not reported as deployment results here. Live inference availability depends on the platform's shared GPU allocation.
+
+The value of the work is connecting a research model with a tool that external users can access, understand, and use to export results.
 
 ---
 
