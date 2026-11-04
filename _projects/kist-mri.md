@@ -41,11 +41,25 @@ I worked with **SynDiff**, a framework combining CycleGAN-style image translatio
 
 ## Approach
 
-- **Understand the adaptation target.** The input contains motion-related degradation; the intended output should make the underlying structures clearer. This task framing guided how the generated outputs were inspected.
-- **Apply an existing generative framework.** My implementation work centered on adapting the SynDiff pipeline to the project setting and executing the corresponding experiments.
-- **Compare input and output directly.** Reviewing paired views of the same example makes changes in visible artifacts and anatomical structure easier to assess than inspecting corrected outputs alone.
+The figure below presents correction results rather than an architecture diagram. The implementation can be understood through three components: **motion-corrupted MRI input → SynDiff correction pipeline → corrected output and comparison**.
 
-The project developed my implementation-and-analysis workflow: understand the method, adapt it to the task, run experiments, and inspect whether the outputs address the original problem.
+### 1. Motion-corrupted MRI Input
+
+The pipeline receives an MRI image affected by motion artifacts. This is the image to be corrected, and it remains the reference for inspecting how the generated output changes visible anatomy and degradation.
+
+Defining this input–output relationship matters: the goal is correction of a particular image, so a visually plausible output alone does not explain whether the original problem has been addressed.
+
+### 2. SynDiff — Image Translation & Diffusion Modeling
+
+SynDiff is the existing generative framework I adapted to this task. It combines CycleGAN-style image translation with diffusion modeling to study the mapping from motion-degraded images to corrected images.
+
+My contribution was model implementation, task adaptation, and running the experimental pipeline. The method's role is to produce the corrected image; my work applied and evaluated that existing framework in the MRI project setting.
+
+### 3. Corrected Output & Visual Comparison
+
+The output is compared with its corresponding motion-corrupted input. The four examples in the results section preserve this pairing, with the input on the left and corrected output on the right.
+
+Direct comparison makes changes in visible artifacts and anatomical structures easier to interpret. These examples document qualitative correction behavior; quantitative image-quality scores are not reported on this page.
 
 ---
 

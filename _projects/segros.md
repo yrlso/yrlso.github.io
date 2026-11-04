@@ -45,14 +45,42 @@ My contribution connected a method idea to training code and then to controlled 
 
 ## Approach
 
-- **Identify which words matter.** Relationships among the text tokens help capture the prompt's language context. Image–text correspondence adds a grounding signal: which words connect to visible image regions? Combining the two makes selection consider both language and visual evidence.
-- **Turn meaning into spatial supervision.** The selected text guides a map of relevant image regions. This map determines which visual hints the model receives and which important regions it learns to reconstruct, keeping conditioning and supervision focused on the same content.
-- **Preserve a simple generation interface.** Visual hints are part of training. At text-to-image inference, the user still provides a text prompt alone; no reference image is required by this training framework.
+The overall framework has two connected parts: the right-hand **Semantically-Grounded Supervision Map** chooses relevant regions, and the left-hand generation framework uses that map to construct training inputs. The module names below follow those labels.
 
 <figure class="figure">
-  <img src="{{ '/assets/img/publication_preview/segros.jpeg' | relative_url }}" alt="SeGroS combines language relevance and visual grounding to select hints and reconstruction targets." class="img-fluid rounded" loading="lazy">
-  <figcaption class="caption">The supervision map links prompt meaning to the image regions used for hints and reconstruction during post-training.</figcaption>
+  <img src="{{ '/assets/img/publication_preview/segros.jpeg' | relative_url }}" alt="SeGroS overall framework and supervision map, including text token filtering, visual grounding, visual hints, corrupted input, and the unified transformer." class="img-fluid rounded" loading="lazy">
+  <figcaption class="caption">Right: identify semantically relevant image regions. Left: use the resulting SeGroS Map to form Visual Hint and Corrupted Input for post-training.</figcaption>
 </figure>
+
+### 1. Text Tokenizer & Vision Encoder
+
+The text tokenizer provides representations of the prompt's words, while the vision encoder provides representations of image regions. These are the inputs used to estimate relationships within the text and correspondence between text and image.
+
+The image representation supplies visual grounding: it helps identify which regions support the objects, attributes, and relationships described by the prompt.
+
+### 2. Discriminative Text Token Filtering
+
+This module chooses the text tokens that will guide supervision. **Text–text intra-modal affinity** provides a language-context signal, and **image–text inter-modal affinity** connects words to visual evidence. The scores are normalized and combined before token selection.
+
+The purpose is to avoid relying only on visually prominent objects when deciding which parts of the prompt matter. Combining these two affinity signals was my contribution to the selection design; the ablation below compares the signals separately and together.
+
+### 3. Visual Grounding Map
+
+Affinities between the selected text tokens and image patches are aggregated into a spatial map. Each patch receives a relevance score indicating how strongly it corresponds to the selected semantic content.
+
+This converts the text-selection result into a decision about **where in the image supervision should focus**. The resulting SeGroS Map is shared by the two training-input branches, keeping their notion of relevance consistent.
+
+### 4. Visual Hint & Corrupted Input
+
+The **Visual Hint** branch supplies highly relevant image patches as conditioning information. The **Corrupted Input** branch masks semantically important regions for reconstruction while retaining less relevant regions as context.
+
+These inputs have complementary roles: the hints provide targeted visual evidence, and the corrupted image defines content the model must learn to reconstruct. Both are selected using semantic relevance rather than spending the training signal uniformly on every image region.
+
+### 5. Unified Auto-Regressive Transformer
+
+The unified model receives the prompt and the map-guided image inputs during post-training. Reconstruction supervision emphasizes the masked content, connecting the generation objective to the prompt's meaning.
+
+I implemented and ran post-training for a Qwen-based unified multimodal model. **At text-to-image inference, the input is text only**: Visual Hint and Corrupted Input describe the training framework, not extra reference images a user must provide to generate an image.
 
 ---
 

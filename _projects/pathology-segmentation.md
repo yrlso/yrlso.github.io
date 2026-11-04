@@ -51,15 +51,42 @@ I translated domain-specific labeling rules into modeling requirements and used 
 
 ## Approach
 
-- **Start from a reproducible comparison.** The baseline combines a pathology foundation encoder with an existing UPerNet single decoder. The encoder extracts tissue features; the decoder converts those features into a label for each image location.
-- **Give context and detail complementary paths.** A global decoder interprets wider tissue organization, while a local decoder preserves fine morphology and boundaries. Their features are combined so a local prediction can use its surroundings.
-- **Use failures to identify missing information.** Large PanIN interiors can look white in a small tile and be mistaken for background. Their lesion boundary and surrounding tissue provide evidence that is absent locally, motivating a wider view.
-- **Investigate context within the encoder.** Wider spatial sampling explores whether a fixed number of visual tokens can represent a larger region while the foundation model remains frozen. This is part of the ongoing investigation of how context reaches the decoders.
+The architecture separates a shared tissue representation from two complementary prediction paths. The names below match the diagram's **Pathology Foundation Encoder**, **Global Context Decoder**, and **Fine-grained Local Decoder**.
 
 <figure class="figure">
-  <img src="{{ '/assets/img/pathology-architecture.png' | relative_url }}" alt="A shared frozen pathology encoder supplies global context and fine-grained local decoders." class="img-fluid rounded" loading="lazy">
-  <figcaption class="caption">The two decoding paths address different needs: understanding the surrounding tissue and preserving local structures.</figcaption>
+  <img src="{{ '/assets/img/pathology-architecture.png' | relative_url }}" alt="Whole-slide input passes through a frozen Pathology Foundation Encoder to a Global Context Decoder and Fine-grained Local Decoder." class="img-fluid rounded" loading="lazy">
+  <figcaption class="caption">A shared frozen encoder supplies the two decoders: one interprets wider tissue context, while the other preserves local morphology and boundaries.</figcaption>
 </figure>
+
+### 1. WSI Input & Tile Preparation
+
+A whole-slide image is divided into image tiles that the model can process. The pipeline must retain how a local tile relates to its surrounding tissue, because a small crop alone can be insufficient under the expert labeling rules.
+
+This input organization is important for the two decoding paths: both fine local evidence and a wider tissue view need to remain available to the prediction pipeline.
+
+### 2. Pathology Foundation Encoder
+
+Virchow2 / UNI extracts pretrained tissue features. The encoder is **frozen**, so its weights are not updated on the 18-slide dataset; adaptation is concentrated on the downstream model and how contextual information reaches it.
+
+The purpose is to use the foundation model's pretrained representation while working within the limited-data setting. The baseline uses these features with an existing UPerNet single decoder.
+
+### 3. Global Context Decoder
+
+This path interprets wider tissue organization to resolve local–global semantic ambiguity. For example, a PanIN-like region needs information about surrounding cancer to receive the PDAC label required by our annotation protocol.
+
+The global decoder's role is therefore contextual interpretation: it supplies evidence that cannot be recovered reliably from the appearance of one isolated tile.
+
+### 4. Fine-grained Local Decoder
+
+This path preserves local tissue morphology and fine boundaries. Wider context helps determine what a region means, but the segmentation still needs to locate small structures and distinguish neighboring tissue regions precisely.
+
+The local and global paths provide complementary features that are combined for the final segmentation. Their separation makes the need for both contextual interpretation and fine localization explicit.
+
+### 5. Context Expansion Within the Frozen Encoder — Ongoing Extension
+
+Beyond the high-level diagram, I am investigating wider spatial sampling for attention so a fixed number of tokens can represent a larger tissue region. This examines how context can influence the features before decoding, while retaining the pretrained encoder weights.
+
+The motivation comes from persistent failures such as a large PanIN lesion's white interior being predicted as background. Its boundary and surroundings may identify it as part of a lesion even when the local appearance is ambiguous. The complete model's reported gain below does not isolate the contribution of this ongoing encoder extension.
 
 ---
 

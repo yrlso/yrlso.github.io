@@ -44,14 +44,32 @@ I found that a feature-distilled student's early attention resembled the teacher
 
 ## Approach
 
-- **Use a compact student.** The CLIP-based FLIP-MCL model acts as the teacher, and a ViT-Tiny-based model acts as the student. The teacher supplies training guidance; the compact student is the model whose inference cost is measured.
-- **Transfer attention across layers.** Align corresponding attention weights with a mean squared error objective. This encourages the student to preserve how the teacher distributes attention over the image, including deeper layers where the analysis found a mismatch.
-- **Compare alternative transfer signals.** Evaluate no distillation, feature-based distillation, relation-based distillation, and the proposed attention-based method under the same student setting. This tests the supervision choice rather than attributing every change to model size.
+The architecture shows two branches receiving an image and a spoof/real text prompt. The **Teacher** guides training of the **Student**, and the dashed connections between their ViT layers correspond to the **MSE Loss** used for attention distillation.
 
 <figure class="figure">
-  <img src="{{ '/assets/img/t-flip-architecture.png' | relative_url }}" alt="T-FLIP transfers layer-wise attention from teacher to student using an MSE loss." class="img-fluid rounded" loading="lazy">
-  <figcaption class="caption">Dashed connections indicate attention supervision between corresponding teacher and student layers during training.</figcaption>
+  <img src="{{ '/assets/img/t-flip-architecture.png' | relative_url }}" alt="T-FLIP Teacher and Student branches with image and text encoders and layer-wise attention supervision labeled MSE Loss." class="img-fluid rounded" loading="lazy">
+  <figcaption class="caption">Teacher and Student are the two model branches. The dashed ViT-layer connections visualize the attention-weight distillation objective.</figcaption>
 </figure>
+
+### 1. Teacher — FLIP-MCL
+
+The larger CLIP-based FLIP-MCL model supplies the reference attention patterns used during training. Its image and text encoders provide the image–text task formulation for distinguishing a real face from a spoof.
+
+The teacher's role is to provide richer guidance than a final class label alone: its attention indicates which image relationships and regions the compact model should learn to preserve.
+
+### 2. Student — ViT-Tiny-based Model
+
+The compact student learns the same anti-spoofing task with a smaller model. It receives the image and text prompt and is the model used to measure the parameter, computation, and throughput reductions reported below.
+
+The challenge is to retain useful spoofing cues when reducing capacity. A small architecture alone does not ensure that attention to cues such as paper texture survives training.
+
+### 3. Layer-wise Attention Distillation — MSE Loss
+
+The dashed connections supervise attention at corresponding ViT layers. A mean squared error (MSE) objective penalizes differences between teacher and student attention patterns, providing guidance across the hierarchy rather than only matching the final feature vector.
+
+This addresses the failure identified in my attention analysis: deeper student layers did not consistently retain the teacher's discriminative focus. Attention-based distillation is compared with feature-based and relation-based alternatives under the same student setting in the results table.
+
+The teacher provides training supervision; the compact student's inference efficiency is evaluated separately. This keeps the role of the distillation objective distinct from the cost of the deployed model.
 
 ---
 

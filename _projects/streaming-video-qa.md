@@ -41,12 +41,31 @@ I investigate both which frames to keep and which visual tokens within a frame d
 
 ## Approach
 
-- **Write without a future question.** The selection policy observes the incoming visual information and current memory. It decides what to add or remove without using the unseen future question.
-- **Maintain a fixed memory budget.** When new information arrives, older or less useful cached information may need to be evicted. KV cache eviction controls the visual context retained by the model as the stream grows.
-- **Investigate a learning signal for useful retention.** The reinforcement-learning formulation treats writing and eviction as sequential decisions. An information-based reward considers what the incoming frame adds to memory; evaluation then asks whether that information helps actual future questions.
-- **Answer from retained evidence.** When a question arrives, the QA model reads the question and stored memory. This separates successful answering from the selection policy's ability to preserve the necessary evidence.
+The system is organized as **visual encoding → frame/token selection → bounded memory → question answering**. The selection and memory modules operate as frames arrive; the QA module runs when a later question is provided.
 
-The central challenge is that information that looks unremarkable now may become important later. Memory errors are therefore evaluated through their consequences for future answers, not only how much information is stored.
+### 1. Visual Encoding — Qwen-VL Pipeline
+
+Incoming frames are represented as visual tokens in a Qwen-VL-based pipeline. A token represents part of the frame, allowing the system to select useful regions within an image rather than treating every frame as an indivisible unit.
+
+This representation is the input to the retention policy. Selecting at the token level provides a finer use of a limited memory budget than keeping all tokens from every retained frame.
+
+### 2. Frame / Token Selection Policy
+
+The policy observes the incoming visual information and current memory, then decides **which frames and which tokens to preserve**. It does not use the future question, which is unknown at write time.
+
+I investigate reinforcement learning for these sequential decisions. The state contains incoming evidence and memory; the actions concern retention and removal; an information-based reward considers what the incoming frame adds to memory. The research question is whether this signal leads to information that supports later QA.
+
+### 3. Bounded Visual Memory & KV Cache Eviction
+
+The memory stores the selected visual evidence under a capacity constraint. As new information arrives, KV cache eviction removes cached information when needed so visual context does not grow indefinitely with stream duration.
+
+The module's role is to implement the selection policy's trade-off: retaining useful new evidence may require giving up old evidence. A fixed capacity controls retained context size; measured latency still needs to be evaluated on the actual implementation.
+
+### 4. Memory-only Question Answering
+
+When a question arrives, the QA model receives the question and retained memory. It cannot revisit the full original video to recover information removed by the selection and eviction modules.
+
+This makes answering an evaluation of the entire retention pipeline. If an event appeared in the stream but the memory discarded its evidence, the QA model may no longer have enough information to answer correctly. Such failures help assess both the selection policy and its reward design.
 
 ---
 
